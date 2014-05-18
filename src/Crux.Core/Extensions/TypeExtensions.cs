@@ -1,0 +1,264 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Crux.Core.Extensions
+{
+    public static class TypeExtensions
+    {
+        /// <summary>
+        /// Does a hard cast of the object to T.  *Will* throw InvalidCastException
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static T As<T>(this object target)
+        {
+        	return (T)target;
+        }
+
+        public static bool IsEnumOrNullableEnum(this Type type)
+        {
+            return type.IsEnum ||
+                   (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) &&
+                    type.GetGenericArguments().Single().IsEnum);
+        }
+
+
+        public static bool IsNullableOfT(this Type theType)
+        {
+            return theType.IsGenericType && theType.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        public static bool IsNullableOf(this Type theType, Type otherType)
+        {
+            return theType.IsNullableOfT() && theType.GetGenericArguments()[0] == otherType;
+        }
+
+        public static bool IsTypeOrNullableOf<T>(this Type theType)
+        {
+            Type otherType = typeof(T);
+            return theType == otherType ||
+                   (theType.IsNullableOfT() && theType.GetGenericArguments()[0] == otherType);
+        }
+
+        public static bool CanBeCastTo<T>(this Type type)
+        {
+            return CanBeCastTo(type, typeof(T));
+        }
+
+        public static bool CanBeCastTo(this Type type, Type destinationType)
+        {
+            if (type == null) return false;
+            if (type == destinationType) return true;
+
+            return destinationType.IsAssignableFrom(type);
+        }
+
+        public static bool IsInNamespace(this Type type, string nameSpace)
+        {
+            return type.Namespace.StartsWith(nameSpace);
+        }
+
+        public static bool IsOpenGeneric(this Type type)
+        {
+            return type.IsGenericTypeDefinition || type.ContainsGenericParameters;
+        }
+
+        public static bool IsGenericEnumerable(this Type type)
+        {
+            var genericArgs = type.GetGenericArguments();
+            return genericArgs.Length == 1 && typeof(IEnumerable<>).MakeGenericType(genericArgs).IsAssignableFrom(type);
+        }
+
+        public static bool IsConcreteTypeOf<T>(this Type pluggedType)
+        {
+            return pluggedType.IsConcrete() && typeof(T).IsAssignableFrom(pluggedType);
+        }
+
+        public static bool ImplementsInterfaceTemplate(this Type pluggedType, Type templateType)
+        {
+            if (!pluggedType.IsConcrete()) return false;
+
+            return pluggedType.GetInterfaces()
+                .Any(interfaceType => interfaceType.IsGenericType
+                    && interfaceType.GetGenericTypeDefinition() == templateType);
+        }
+
+        public static Type FindInterfaceThatCloses(this Type type, Type openType)
+        {
+            if (type.IsInterface && type.IsGenericType && type.GetGenericTypeDefinition() == openType) return type;
+
+
+            foreach (Type interfaceType in type.GetInterfaces()) {
+                if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == openType) {
+                    return interfaceType;
+                }
+            }
+
+            if (!type.IsConcrete()) return null;
+
+            return type.BaseType == typeof(object)
+                       ? null
+                       : type.BaseType.FindInterfaceThatCloses(openType);
+        }
+
+        public static bool IsNullable(this Type type)
+        {
+            return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+        }
+
+        public static bool Closes(this Type type, Type openType)
+        {
+            if (type == null) return false;
+
+            if (type.IsGenericType && type.GetGenericTypeDefinition() == openType) return true;
+
+            if (type.GetInterfaces().Any(@interface => @interface.Closes(openType))) {
+                return true;
+            }
+
+            Type baseType = type.BaseType;
+            if (baseType == null) return false;
+
+            bool closes = baseType.IsGenericType && baseType.GetGenericTypeDefinition() == openType;
+            if (closes) return true;
+
+            return type.BaseType == null ? false : type.BaseType.Closes(openType);
+        }
+
+        public static Type GetInnerTypeFromNullable(this Type nullableType)
+        {
+            return nullableType.GetGenericArguments()[0];
+        }
+
+        public static string GetName(this Type type)
+        {
+            if (type.IsGenericType) {
+                string[] parameters = Array.ConvertAll(type.GetGenericArguments(), t => t.GetName());
+                string parameterList = String.Join(", ", parameters);
+                return "{0}<{1}>".ToFormat(type.Name, parameterList);
+            }
+
+            return type.Name;
+        }
+
+        public static string GetFullName(this Type type)
+        {
+            if (type.IsGenericType) {
+                string[] parameters = Array.ConvertAll(type.GetGenericArguments(), t => t.GetName());
+                string parameterList = String.Join(", ", parameters);
+                return "{0}<{1}>".ToFormat(type.Name, parameterList);
+            }
+
+            return type.FullName;
+        }
+
+        public static bool IsString(this Type type)
+        {
+            return type.Equals(typeof(string));
+        }
+
+        public static bool IsPrimitive(this Type type)
+        {
+            return type.IsPrimitive && !IsString(type) && type != typeof(IntPtr);
+        }
+
+        public static bool IsSimple(this Type type)
+        {
+            return type.IsPrimitive || IsString(type) || type.IsEnum;
+        }
+
+        public static bool IsConcrete(this Type type)
+        {
+            return !type.IsAbstract && !type.IsInterface;
+        }
+
+        public static bool IsNotConcrete(this Type type)
+        {
+            return !type.IsConcrete();
+        }
+
+        /// <summary>
+        /// Returns true if the type is a DateTime or nullable DateTime
+        /// </summary>
+        /// <param name="typeToCheck"></param>
+        /// <returns></returns>
+        public static bool IsDateTime(this Type typeToCheck)
+        {
+            return typeToCheck == typeof(DateTime) || typeToCheck == typeof(DateTime?);
+        }
+
+        /// <summary>
+        /// Displays type names using CSharp syntax style. Supports funky generic types.
+        /// </summary>
+        /// <param name="type">Type to be pretty printed</param>
+        /// <returns></returns>
+        public static string PrettyPrint(this Type type)
+        {
+            return type.PrettyPrint(t => t.Name);
+        }
+
+        /// <summary>
+        /// Displays type names using CSharp syntax style. Supports funky generic types.
+        /// </summary>
+        /// <param name="type">Type to be pretty printed</param>
+        /// <param name="selector">Function determining the name of the type to be displayed. Useful if you want a fully qualified name.</param>
+        /// <returns></returns>
+        public static string PrettyPrint(this Type type, Func<Type, string> selector)
+        {
+            string typeName = selector(type) ?? string.Empty;
+
+            if (!type.IsGenericType) {
+                return typeName;
+            }
+
+            Func<Type, string> genericParamSelector = type.IsGenericTypeDefinition ? t => t.Name : selector;
+            string genericTypeList = String.Join(",", type.GetGenericArguments().Select(genericParamSelector).ToArray());
+            int tickLocation = typeName.IndexOf('`');
+
+            if (tickLocation >= 0) {
+                typeName = typeName.Substring(0, tickLocation);
+            }
+
+            return string.Format("{0}<{1}>", typeName, genericTypeList);
+        }
+
+        /// <summary>
+        /// Returns a boolean value indicating whether or not the type is:
+        /// int, long, decimal, short, float, or double
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Bool indicating whether the type is numeric</returns>
+        public static bool IsNumeric(this Type type)
+        {
+            return type.IsFloatingPoint() || type.IsIntegerBased();
+        }
+
+        /// <summary>
+        /// Returns a boolean value indicating whether or not the type is:
+        /// int, long or short
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Bool indicating whether the type is integer based</returns>
+        public static bool IsIntegerBased(this Type type)
+        {
+            return type == typeof(int) 
+                || type == typeof(long)
+                || type == typeof(short);
+        }
+
+        /// <summary>
+        /// Returns a boolean value indicating whether or not the type is:
+        /// decimal, float or double
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>Bool indicating whether the type is floating point</returns>
+        public static bool IsFloatingPoint(this Type type)
+        {
+            return type == typeof(decimal) 
+                || type == typeof(float)
+                || type == typeof(double);
+        }
+    }
+}

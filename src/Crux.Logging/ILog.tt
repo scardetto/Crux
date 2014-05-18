@@ -1,0 +1,25 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ output extension=".cs" #>
+
+<# var methodNames = new[] { "Debug", "Info", "Warn", "Error", "Fatal" }; #>
+    
+using System;
+
+namespace Crux.Logging 
+{
+    public interface ILog 
+    {
+    
+    <# foreach (var method in methodNames) { #>
+
+        void <#=method#>(object message);
+        void <#=method#>(string message, params object[] args);
+        void <#=method#>(object message, Exception e);
+        void <#=method#>(string message, Exception e, params object[] args);
+        bool Is<#=method#>Enabled { get; }
+
+    <# } #>
+
+    }
+}
