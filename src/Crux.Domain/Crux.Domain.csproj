@@ -44,9 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\DomainEntity.cs" />
-    <Compile Include="Entities\IDomainQuery.cs" />
-    <Compile Include="Entities\IRepository.cs" />
+    <Compile Include="Entities\DomainEntityOfId.cs" />
+    <Compile Include="Entities\IDomainQueryOfId.cs" />
+    <Compile Include="Entities\IRepositoryOfId.cs" />
     <Compile Include="Events\DomainEvents.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
     <Compile Include="Events\IHandle.cs" />

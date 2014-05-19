@@ -25,6 +25,6 @@ namespace Crux.Domain.Tests.Entities
             entity1.Should().NotBe(entity2);
         }
 
-        private class TestDomainObject : DomainEntity<int> { }
+        private class TestDomainObject : DomainEntityOfId<int> { }
     }
 }
