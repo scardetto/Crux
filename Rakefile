@@ -6,7 +6,7 @@ CruxRake::Solution.new do |s|
 end
 
 desc 'Packages all nugets'
-nugets_pack :package => [ :versionizer ] do |p|
+nugets_pack :package => [ :versionizer, :test ] do |p|
   p.files   = FileList['src/**/*.{csproj,fsproj,nuspec}'].exclude(/Tests/)
   p.out     = 'build/packages'
   p.exe     = 'src/.nuget/NuGet.exe'
