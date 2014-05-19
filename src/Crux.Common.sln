@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{F6DC2E
 	ProjectSection(SolutionItems) = preProject
 		..\Gemfile = ..\Gemfile
 		..\Rakefile = ..\Rakefile
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{480F0ADA-3AEA-41F4-B9AB-627EB51B4283}"
