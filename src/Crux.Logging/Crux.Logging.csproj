@@ -54,6 +54,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Log4NetLogAdapter.tt</DependentUpon>
     </Compile>
+    <Compile Include="LoggingConfigurator.cs" />
     <Compile Include="LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
