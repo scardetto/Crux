@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEndpoint.cs" />
     <Compile Include="Exceptions\HttpException.cs" />
     <Compile Include="Extensions\HttpActionExecutedContextExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
