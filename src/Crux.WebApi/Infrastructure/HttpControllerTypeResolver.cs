@@ -13,7 +13,6 @@ namespace Crux.WebApi.Infrastructure
         internal static bool IsHttpEndpoint(Type t)
         {
             if (t == null) throw new ArgumentNullException("t");
-
             return t.IsClass
                 && t.IsVisible
                 && !t.IsAbstract
