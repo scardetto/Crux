@@ -1,0 +1,49 @@
+GIT
+  remote: https://github.com/Core4Tek/cruxrake.git
+  revision: bc0ceb5847b84682f74ca17d3d23d1a3fdaff65f
+  specs:
+    cruxrake (0.1.0)
+      activesupport (~> 4.1)
+      albacore (= 2.0.0.rc.12)
+      map (~> 6.5)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ProcessPilot (2.0.0.20120301)
+      rUtilAnts (>= 1.0)
+    activesupport (4.1.1)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
+    albacore (2.0.0.rc.12)
+      ProcessPilot (~> 2.0)
+      facter (~> 1.7)
+      highline (~> 1.6)
+      map (~> 6.5)
+      nokogiri (~> 1.5)
+      rake (> 10)
+      semver2 (~> 3.3)
+    facter (1.7.5)
+    highline (1.6.21)
+    i18n (0.6.9)
+    json (1.8.1)
+    map (6.5.3)
+    mini_portile (0.6.0)
+    minitest (5.3.4)
+    nokogiri (1.6.2.1-x86-mingw32)
+      mini_portile (= 0.6.0)
+    rUtilAnts (2.0.0.20130827)
+    rake (10.3.2)
+    semver2 (3.3.3)
+    thread_safe (0.3.3)
+    tzinfo (1.1.0)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  x86-mingw32
+
+DEPENDENCIES
+  cruxrake!
