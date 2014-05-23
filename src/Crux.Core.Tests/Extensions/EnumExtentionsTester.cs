@@ -5,6 +5,12 @@ using NUnit.Framework;
 
 namespace Crux.Core.Tests.Extensions
 {
+    public enum TestEnum1
+    {
+        Foo,
+        Bar
+    }
+
     [TestFixture]
     public class EnumExtentionsTester
     {
@@ -43,18 +49,5 @@ namespace Crux.Core.Tests.Extensions
             Assert.Throws<InvalidCastException>(() => "foobar".AsEnum<TestEnum1>(), "foobar is not a defined value of TestEnum1");
             Assert.Throws<InvalidCastException>(() => 3.AsEnum<TestEnum1>(), "3 is not a defined value of TestEnum1");
         }
-    }
-
-
-    public enum TestEnum1
-    {
-        Foo,
-        Bar
-    }
-
-    public enum TestEnum2
-    {
-        Foo,
-        Bar
     }
 }
