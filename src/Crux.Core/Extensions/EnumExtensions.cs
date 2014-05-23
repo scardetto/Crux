@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Crux.Core.Extensions
 {
@@ -23,12 +24,25 @@ namespace Crux.Core.Extensions
             return (TDestType)Enum.ToObject(typeof(TDestType), value);
         }
 
+        public static TDestType AsEnum<TDestType>(this string value)
+        {
+            value.AssertValidValue<TDestType>();
+            return (TDestType)Enum.Parse(typeof(TDestType), value, true);
+        }
+
         public static void AssertValidValue<TDestType>(this TDestType value)
         {
             AssertValidValue<TDestType>((object)value);
         }
 
         public static void AssertValidValue<TDestType>(this object value)
+        {
+            if (!value.IsValidValue<TDestType>()) {
+                throw new InvalidCastException("{0} is not a defined value of {1}".ToFormat(value, typeof(TDestType).Name));
+            }
+        }
+
+        public static void AssertValidValue<TDestType>(this string value)
         {
             if (!value.IsValidValue<TDestType>()) {
                 throw new InvalidCastException("{0} is not a defined value of {1}".ToFormat(value, typeof(TDestType).Name));
@@ -44,6 +58,12 @@ namespace Crux.Core.Extensions
         {
             AssertEnumType<TDestType>();
             return Enum.IsDefined(typeof(TDestType), value);
+        }
+
+        public static bool IsValidValue<TDestType>(this string value)
+        {
+            AssertEnumType<TDestType>();
+            return Enum.GetNames(typeof(TDestType)).Any(x => x.ToLower() == value.ToLower());
         }
 
         private static int AsInt(this object input)
