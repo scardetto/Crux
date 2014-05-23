@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Crux.Core.Tests.Extensions
 {
     [TestFixture]
-    public class TelcoExtensionTester
+    public class TelcoExtensionsTester
     {
         [Test]
         public void should_validate_us_phone_number()
