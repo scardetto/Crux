@@ -49,5 +49,12 @@ namespace Crux.Core.Tests.Extensions
             Assert.Throws<InvalidCastException>(() => "foobar".AsEnum<TestEnum1>(), "foobar is not a defined value of TestEnum1");
             Assert.Throws<InvalidCastException>(() => 3.AsEnum<TestEnum1>(), "3 is not a defined value of TestEnum1");
         }
+
+        [Test]
+        public void should_validate_string_value_is_valid_enum_value()
+        {
+            "foo".IsValidValue<TestEnum1>().Should().BeTrue();
+            "foobar".IsValidValue<TestEnum1>().Should().BeFalse();
+        }
     }
 }
