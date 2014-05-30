@@ -13,9 +13,10 @@ end
 
 desc 'Packages all nugets'
 nugets_pack :package => [ :versionizer, :test, :ensure_output ] do |p|
-  p.files   = FileList['src/**/*.{csproj,fsproj,nuspec}'].exclude(/Tests/)
-  p.out     = output_location
-  p.exe     = 'src/.nuget/NuGet.exe'
+  p.configuration   = 'Release'
+  p.files           = FileList['src/**/*.{csproj,fsproj,nuspec}'].exclude(/Tests/)
+  p.out             = output_location
+  p.exe             = 'src/.nuget/NuGet.exe'
   p.with_metadata do |m|
     m.description = 'Common libraries for crux applications'
     m.authors = 'Robert Scaduto'
