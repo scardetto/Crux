@@ -27,6 +27,7 @@ end
 namespace :publish do
   desc 'Copy nuget packages to local package source'
   task :local => [ :package ] do
+    FilUtils.mkdir_p 'C:/Nuget.Local'
     FileUtils.cp 'build/packages/*', 'C:/Nuget.Local'
   end
 end
