@@ -9,7 +9,7 @@ using NUnit.Framework;
 using StructureMap;
 using StructureMap.Graph;
 
-namespace Crux.WebApi.Tests
+namespace Crux.WebApi.Testing
 {
     public abstract class BaseControllerTester<T> where T : ApiController
     {

@@ -7,8 +7,8 @@
     <ProjectGuid>{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Crux.WebApi.Tests</RootNamespace>
-    <AssemblyName>Crux.WebApi.Tests</AssemblyName>
+    <RootNamespace>Crux.WebApi.Testing</RootNamespace>
+    <AssemblyName>Crux.WebApi.Testing</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

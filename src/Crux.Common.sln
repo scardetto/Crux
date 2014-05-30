@@ -54,7 +54,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StructureMap", "StructureMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crux.StructureMap", "Crux.StructureMap\Crux.StructureMap.csproj", "{D7D6BDF5-8682-4BC0-B0EA-2BB0BD083381}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crux.WebApi.Tests", "Crux.WebApi.Tests\Crux.WebApi.Tests.csproj", "{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crux.WebApi.Testing", "Crux.WebApi.Tests\Crux.WebApi.Testing.csproj", "{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

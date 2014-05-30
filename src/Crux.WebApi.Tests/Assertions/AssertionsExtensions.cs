@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace Crux.WebApi.Tests.Assertions
+namespace Crux.WebApi.Testing.Assertions
 {
     public static class AssertionsExtensions
     {
