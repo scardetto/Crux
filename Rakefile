@@ -5,10 +5,16 @@ CruxRake::Solution.new do |s|
   s.file = 'src/Crux.Common.sln'
 end
 
+output_location = 'build/packages'
+
+task :ensure_output do
+  FileUtils.mkdir_p output_location
+end
+
 desc 'Packages all nugets'
-nugets_pack :package => [ :versionizer, :test ] do |p|
+nugets_pack :package => [ :versionizer, :test, :ensure_output ] do |p|
   p.files   = FileList['src/**/*.{csproj,fsproj,nuspec}'].exclude(/Tests/)
-  p.out     = 'build/packages'
+  p.out     = output_location
   p.exe     = 'src/.nuget/NuGet.exe'
   p.with_metadata do |m|
     m.description = 'Common libraries for crux applications'
