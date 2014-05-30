@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crux.Core", "Crux.Core\Crux.Core.csproj", "{138EB8D4-F89B-41AD-8B24-94FBF8A0CEAB}"
 EndProject
@@ -53,6 +53,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "StructureMap", "StructureMap", "{67CE044B-BFB2-4DF2-B999-B228057C9AE4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crux.StructureMap", "Crux.StructureMap\Crux.StructureMap.csproj", "{D7D6BDF5-8682-4BC0-B0EA-2BB0BD083381}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crux.WebApi.Tests", "Crux.WebApi.Tests\Crux.WebApi.Tests.csproj", "{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,6 +110,10 @@ Global
 		{D7D6BDF5-8682-4BC0-B0EA-2BB0BD083381}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7D6BDF5-8682-4BC0-B0EA-2BB0BD083381}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7D6BDF5-8682-4BC0-B0EA-2BB0BD083381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +130,7 @@ Global
 		{37826A7F-805A-4E1A-96B3-160F6D26239B} = {0EBBB6F3-FDCF-438F-AD9E-A7CB26257683}
 		{31B0241D-1287-4361-91C3-7B817D1E639D} = {E89A3F19-B8D5-4779-B7B5-12330ECD6981}
 		{0E50D3E4-DC76-4627-8C74-52C89604EBB1} = {CF70A55B-A745-4D2A-98C4-46A42DF07DD7}
+		{D8CC46E1-FC4E-472F-9F1B-DA638A14B5E0} = {CF70A55B-A745-4D2A-98C4-46A42DF07DD7}
 		{D7D6BDF5-8682-4BC0-B0EA-2BB0BD083381} = {67CE044B-BFB2-4DF2-B999-B228057C9AE4}
 	EndGlobalSection
 EndGlobal
