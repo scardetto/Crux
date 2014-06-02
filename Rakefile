@@ -1,5 +1,6 @@
 require 'albacore'
 require 'cruxrake'
+require 'pry'
 
 CruxRake::Solution.new do |s|
   s.file = 'src/Crux.Common.sln'
@@ -17,6 +18,7 @@ nugets_pack :package => [ :versionizer, :test, :ensure_output ] do |p|
   p.files           = FileList['src/**/*.{csproj,fsproj,nuspec}'].exclude(/Tests/)
   p.out             = output_location
   p.exe             = 'src/.nuget/NuGet.exe'
+  p.gen_symbols
   p.with_metadata do |m|
     m.description = 'Common libraries for crux applications'
     m.authors = 'Robert Scaduto'
@@ -36,6 +38,7 @@ desc 'Publish all nuget packages to public repo'
 task :publish => [ :package ] do
   %w(Crux.Core Crux.Logging Crux.Caching Crux.Domain Crux.Domain.Persistence Crux.NServiceBus Crux.StructureMap Crux.WebApi).each do |p|
     sh "src/.nuget/nuget.exe push build/packages/#{p}.#{ENV['NUGET_VERSION']}.nupkg #{ENV.fetch('NUGET_API_KEY')} -Source https://www.myget.org/F/thirdwave/api/v2/package"
+	sh "src/.nuget/nuget.exe push build/packages/#{p}.#{ENV['NUGET_VERSION']}.symbols.nupkg #{ENV.fetch('NUGET_API_KEY')} -Source https://www.myget.org/F/thirdwave/api/v2/package"
   end
 end
 
