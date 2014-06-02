@@ -1,14 +1,12 @@
-﻿using System.Diagnostics;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using FluentAssertions.Primitives;
 
-namespace Crux.WebApi.Tests.Assertions
+namespace Crux.WebApi.Testing.Assertions
 {
-    [DebuggerNonUserCode]
     public class HttpResponseMessageAssertions : ReferenceTypeAssertions<HttpResponseMessage, HttpResponseMessageAssertions>
     {
         public HttpResponseMessageAssertions(HttpResponseMessage response)
