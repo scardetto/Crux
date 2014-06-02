@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using FluentAssertions;
@@ -8,7 +7,6 @@ using FluentAssertions.Primitives;
 
 namespace Crux.WebApi.Testing.Assertions
 {
-    [DebuggerNonUserCode]
     public class HttpResponseMessageAssertions : ReferenceTypeAssertions<HttpResponseMessage, HttpResponseMessageAssertions>
     {
         public HttpResponseMessageAssertions(HttpResponseMessage response)
