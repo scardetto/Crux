@@ -46,7 +46,7 @@ namespace Crux.WebApi.Testing.Assertions
             Execute.Assertion
                 .ForCondition(stringContent.Equals(expected))
                 .BecauseOf(because, reasonArgs)
-                .FailWith("Expeceted response body '{0}', but found {1}.", expected, stringContent);
+                .FailWith("Expeceted response body '{0}', but found '{1}'.", expected, stringContent);
 
             return new AndConstraint<HttpResponseMessageAssertions>(this);
         }
@@ -58,7 +58,7 @@ namespace Crux.WebApi.Testing.Assertions
             Execute.Assertion
                 .ForCondition(stringContent.StartsWith(expected))
                 .BecauseOf(because, reasonArgs)
-                .FailWith("Expeceted response body to start with {0}, but found {1}.", expected, stringContent);
+                .FailWith("Expeceted response body to start with '{0}', but found '{1}'.", expected, stringContent);
 
             return new AndConstraint<HttpResponseMessageAssertions>(this);
         }
@@ -68,7 +68,7 @@ namespace Crux.WebApi.Testing.Assertions
             Execute.Assertion
                 .ForCondition(Subject.StatusCode == statusCode)
                 .BecauseOf(because, reasonArgs)
-                .FailWith("Expeceted status code {0}, but found {1}.", statusCode, Subject.StatusCode);
+                .FailWith("Expeceted status code '{0}', but found '{1}'.", statusCode, Subject.StatusCode);
 
             return new AndConstraint<HttpResponseMessageAssertions>(this);
         }
@@ -78,7 +78,7 @@ namespace Crux.WebApi.Testing.Assertions
             Execute.Assertion
                 .ForCondition(Subject.Content.Headers.ContentType.MediaType.Equals(mediaType.MediaType))
                 .BecauseOf(because, reasonArgs)
-                .FailWith("Expeceted response media type {0}, but found {1}.", mediaType.MediaType, Subject.Content.Headers.ContentType.MediaType);
+                .FailWith("Expeceted response media type '{0}', but found '{1}'.", mediaType.MediaType, Subject.Content.Headers.ContentType.MediaType);
 
             return new AndConstraint<HttpResponseMessageAssertions>(this);
         }
