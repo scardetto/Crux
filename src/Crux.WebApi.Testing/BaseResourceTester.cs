@@ -7,15 +7,14 @@ using Crux.WebApi.Activators;
 using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using StructureMap;
-using StructureMap.Graph;
 
 namespace Crux.WebApi.Testing
 {
-    public abstract class BaseControllerTester<T> where T : ApiController
+    public abstract class BaseResourceTester<T> where T : ApiController
     {
         private HttpServer _server;
 
-        protected BaseControllerTester()
+        protected BaseResourceTester()
         {
             InitializeContainer();
             InitializeServiceLocator();

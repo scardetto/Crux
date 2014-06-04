@@ -71,7 +71,7 @@
   <ItemGroup>
     <Compile Include="Assertions\AssertionsExtensions.cs" />
     <Compile Include="Assertions\HttpResponseMessageAssertions.cs" />
-    <Compile Include="BaseControllerTester.cs" />
+    <Compile Include="BaseResourceTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
