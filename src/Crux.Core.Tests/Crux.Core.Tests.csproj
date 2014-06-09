@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassLoaderTester.cs" />
+    <Compile Include="Extensions\DateTimeExtensionsTester.cs" />
     <Compile Include="Extensions\EnumExtentionsTester.cs" />
     <Compile Include="Extensions\QueryStringExtensionsTester.cs" />
     <Compile Include="Extensions\StringExtensionsTester.cs" />
