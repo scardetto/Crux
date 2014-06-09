@@ -11,6 +11,7 @@ namespace Crux.Domain.Testing.Persistence
 {
     public abstract class DomainPersistenceTester : DomainPersistenceTester<int> { }
 
+    [Category("PersistenceTest")]
     public abstract class DomainPersistenceTester<TId>
     {
         private IList<DomainEntityOfId<TId>> _insertedEntities;
