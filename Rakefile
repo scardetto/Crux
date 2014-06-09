@@ -36,7 +36,7 @@ end
 
 desc 'Publish all nuget packages to public repo'
 task :publish => [ :package ] do
-  %w(Crux.Core Crux.Logging Crux.Caching Crux.Domain Crux.Domain.Persistence Crux.NServiceBus Crux.StructureMap Crux.WebApi Crux.WebApi.Testing).each do |p|
+  %w(Crux.Core Crux.Logging Crux.Caching Crux.Domain Crux.Domain.Persistence Crux.Domain.Testing Crux.NServiceBus Crux.StructureMap Crux.WebApi Crux.WebApi.Testing).each do |p|
     sh "src/.nuget/nuget.exe push build/packages/#{p}.#{ENV['NUGET_VERSION']}.nupkg #{ENV.fetch('NUGET_API_KEY')} -Source https://www.myget.org/F/thirdwave/api/v2/package"
 	sh "src/.nuget/nuget.exe push build/packages/#{p}.#{ENV['NUGET_VERSION']}.symbols.nupkg #{ENV.fetch('NUGET_API_KEY')} -Source https://www.myget.org/F/thirdwave/api/v2/package"
   end
