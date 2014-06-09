@@ -5,7 +5,7 @@ using Microsoft.Practices.ServiceLocation;
 using NUnit.Framework;
 using Rhino.Mocks;
 
-namespace Crux.Domain.Tests.Events
+namespace Crux.Domain.Testing.Events
 {
     [TestFixture]
     public class DomainEventsTester

@@ -7,7 +7,7 @@ using Crux.Domain.Persistence.NHibernate;
 using NHibernate;
 using NUnit.Framework;
 
-namespace Crux.Domain.Tests.Persistence
+namespace Crux.Domain.Testing.Persistence
 {
     public abstract class DomainPersistenceTester : DomainPersistenceTester<int> { }
 

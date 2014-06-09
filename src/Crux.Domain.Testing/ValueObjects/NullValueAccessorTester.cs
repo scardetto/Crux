@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Crux.Domain.Tests.ValueObjects
+namespace Crux.Domain.Testing.ValueObjects
 {
     [TestFixture]
     public class NullValueAccessorTester

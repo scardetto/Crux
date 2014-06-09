@@ -2,7 +2,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Crux.Domain.Tests.Entities
+namespace Crux.Domain.Testing.Entities
 {
     [TestFixture]
     public class DomainEntityTester

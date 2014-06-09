@@ -1,6 +1,6 @@
 ﻿using Crux.Domain.ValueObjects;
 
-namespace Crux.Domain.Tests.ValueObjects
+namespace Crux.Domain.Testing.ValueObjects
 {
     public class TestObject : INullable
     {
