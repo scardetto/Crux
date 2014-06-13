@@ -15,8 +15,9 @@
             IUnitOfWorkTransaction transaction)
         {
             _unitOfWork = unitOfWork;
-            _unitOfWork.Start();
             _transaction = transaction;
+            _unitOfWork.Start();
+            _transaction.Begin();
         }
 
         public bool WasRolledBack

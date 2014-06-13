@@ -13,7 +13,6 @@ namespace Crux.Domain.Persistence.NHibernate
         {
             _unitOfWork = unitOfWork;
             _options = options;
-            Begin();
         }
 
         public void Begin()
