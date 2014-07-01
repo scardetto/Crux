@@ -68,10 +68,10 @@ namespace Crux.Core.Tests.Extensions
         {
             "1".IsNumeric().Should().BeTrue();
             "1.0".IsNumeric().Should().BeTrue();
-            "$1.00".IsNumeric().Should().BeTrue();
             "text".IsNumeric().Should().BeFalse();
 
             var culture = CultureInfo.GetCultureInfo("en-US");
+            "$1.00".IsNumeric(culture).Should().BeTrue();
             "100,000.00".IsNumeric(culture).Should().BeTrue();
 
             culture = CultureInfo.GetCultureInfo("en-GB");
