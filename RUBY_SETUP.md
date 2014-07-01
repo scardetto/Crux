@@ -14,25 +14,8 @@
 > cinst ruby.devkit
 ```
 
-* Install required gems
+## Troubleshooting
 
-```
-> gem install bundler 
-```
-
-* Run the bundle install to get required games
-
-```
-> bundle install --binstubs
-```
-
-* Run the build using rake.
-
-```
-> bundle exec rake
-```
-
-NOTE:
 When installing Ruby DevKit it should automatically register itself with the
 installed ruby version.  However, you may need to configure Ruby DevKit manually
 by running the following.
@@ -60,6 +43,29 @@ Another thing to try...
 > chcp 1252
 > ruby dk.rb init
 ```
+
+# Building the Solution
+
+* Clone the repo
+* Install bundler
+
+```
+> gem install bundler 
+```
+
+* Install the required games
+
+```
+> bundle install --binstubs
+```
+
+* Run the build using rake.
+
+```
+> bundle exec rake
+```
+
+# Available Build Tasks
 
 One installed you should have access to the following tasks:
 
