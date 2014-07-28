@@ -1,8 +1,8 @@
 require 'albacore'
-require 'cruxrake'
+require 'physique'
 require 'pry'
 
-CruxRake::Solution.new do |s|
+Physique::Solution.new do |s|
   s.file = 'src/Crux.Common.sln'
 
   s.publish_nugets do |p|

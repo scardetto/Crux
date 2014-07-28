@@ -11,8 +11,7 @@ namespace Crux.Core.Extensions
 
         public static bool ToBoolean(this string value)
         {
-            if (value.IsBlank()) return false;
-            return bool.Parse(value);
+            return !value.IsBlank() && bool.Parse(value);
         }
 
         /// <summary>
