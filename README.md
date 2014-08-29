@@ -1,3 +1,3 @@
-# Crux.Common
+# Crux
 
-Common libraries for crux projects.
+Framework for kickstarting .NET apps using Domain Driven Design
