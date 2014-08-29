@@ -1,9 +1,7 @@
-require 'albacore'
 require 'physique'
-require 'pry'
 
 Physique::Solution.new do |s|
-  s.file = 'src/Crux.Common.sln'
+  s.file = 'src/Crux.sln'
 
   s.publish_nugets do |p|
     p.feed_url = 'https://www.myget.org/F/thirdwave/api/v2/package'
