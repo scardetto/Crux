@@ -139,5 +139,20 @@ namespace Crux.Core.Extensions
         {
             return values.Join(separator.ToString());
         }
+
+        /// <summary>
+        /// Uses InvariantCulture. Use overload to specify a Format Provider
+        /// </summary>
+        public static DateTime? ToDateTime(this string input, string format)
+        {
+            return input.ToDateTime(format, CultureInfo.InvariantCulture);
+        }
+
+        public static DateTime? ToDateTime(this string input, string format, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return null;
+
+            return DateTime.ParseExact(input, format, formatProvider);
+        }
     }
 }
