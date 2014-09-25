@@ -139,5 +139,12 @@ namespace Crux.Core.Extensions
         {
             return values.Join(separator.ToString());
         }
+
+        public static DateTime? ToDateTime(this string input, string format)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return null;
+
+            return DateTime.ParseExact(input, format, CultureInfo.InvariantCulture);
+        }
     }
 }
