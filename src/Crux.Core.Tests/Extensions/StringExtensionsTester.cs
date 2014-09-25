@@ -166,5 +166,19 @@ namespace Crux.Core.Tests.Extensions
             values.Join(",").Should().Be("a,sequence,of,strings");
             values.Join("|").Should().Be("a|sequence|of|strings");
         }
+
+        [Test]
+        public void toDateTime_should_return_null_when_input_is_a_blank_string()
+        {
+            string.Empty.ToDateTime("d").Should().Be(null);
+            "  ".ToDateTime("d").Should().Be(null);
+            ((string)null).ToDateTime("d").Should().Be(null);
+        }
+
+        [Test]
+        public void toDateTime_should_return_datetime()
+        {
+            "09/25/2014".ToDateTime("d").Should().Be(new DateTime(2014, 9, 25));
+        }
     }
 }
