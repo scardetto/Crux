@@ -168,17 +168,23 @@ namespace Crux.Core.Tests.Extensions
         }
 
         [Test]
-        public void toDateTime_should_return_null_when_input_is_a_blank_string()
+        public void toNullableDateTime_should_return_null_when_input_is_a_blank_string()
         {
-            string.Empty.ToDateTime("d").Should().Be(null);
-            "  ".ToDateTime("d").Should().Be(null);
-            ((string)null).ToDateTime("d").Should().Be(null);
+            string.Empty.ToNullableDateTime("d").Should().Be(null);
+            "  ".ToNullableDateTime("d").Should().Be(null);
+            ((string)null).ToNullableDateTime("d").Should().Be(null);
         }
 
         [Test]
-        public void toDateTime_should_return_datetime()
+        public void toNullableDateTime_should_return_datetime()
         {
-            "09/25/2014".ToDateTime("d").Should().Be(new DateTime(2014, 9, 25));
+            "09/25/2014".ToNullableDateTime("d").Should().Be(new DateTime(2014, 9, 25));
+        }
+
+        [Test]
+        public void toNullableDateTime_should_return_datetime_for_iso8601_input()
+        {
+            "2014-11-06T00:00:00-05:00".ToNullableDateTime().Should().Be(new DateTime(2014, 11, 6));
         }
     }
 }
