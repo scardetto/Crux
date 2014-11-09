@@ -143,16 +143,31 @@ namespace Crux.Core.Extensions
         /// <summary>
         /// Uses InvariantCulture. Use overload to specify a Format Provider
         /// </summary>
-        public static DateTime? ToDateTime(this string input, string format)
+        public static DateTime? ToNullableDateTime(this string input, string format)
         {
-            return input.ToDateTime(format, CultureInfo.InvariantCulture);
+            return input.ToNullableDateTime(format, CultureInfo.InvariantCulture);
         }
 
-        public static DateTime? ToDateTime(this string input, string format, IFormatProvider formatProvider)
+        public static DateTime? ToNullableDateTime(this string input, string format, IFormatProvider formatProvider)
         {
             if (string.IsNullOrWhiteSpace(input)) return null;
 
             return DateTime.ParseExact(input, format, formatProvider);
+        }
+
+        /// <summary>
+        /// Uses InvariantCulture. Use overload to specify a Format Provider
+        /// </summary>
+        public static DateTime? ToNullableDateTime(this string input)
+        {
+            return input.ToNullableDateTime(CultureInfo.InvariantCulture);
+        }
+
+        public static DateTime? ToNullableDateTime(this string input, IFormatProvider formatProvider)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return null;
+
+            return DateTime.Parse(input, formatProvider);
         }
     }
 }
