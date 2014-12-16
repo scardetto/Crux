@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Crux.NancyFx.Infrastructure.Exceptions;
 using Nancy;
+using Nancy.Validation;
 
 namespace Crux.NancyFx.Infrastructure.Extensions
 {
@@ -24,6 +26,14 @@ namespace Crux.NancyFx.Infrastructure.Extensions
             }
 
             return value != null && !value.Equals(default(T));
+        }
+
+        public static void ValidateModel<T>(this NancyModule module, T input) where T : class
+        {
+            var validation = module.Validate(input);
+            if (!validation.IsValid) {
+                throw new BadRequestException(validation);
+            }
         }
     }
 }
