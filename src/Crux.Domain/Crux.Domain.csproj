@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Component\Timestamp.cs" />
+    <Compile Include="Entities\CompositeIdentity.cs" />
     <Compile Include="Entities\DomainEntityOfId.cs" />
     <Compile Include="Entities\IDomainQueryOfId.cs" />
     <Compile Include="Entities\IRepositoryOfId.cs" />
