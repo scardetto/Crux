@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Crux.NancyFx.Infrastructure.Exceptions;
 using Nancy;
 using Nancy.Validation;
@@ -9,12 +7,6 @@ namespace Crux.NancyFx.Infrastructure.Extensions
 {
     public static class NancyModuleExtensions
     {
-        public static IEnumerable<object> EnumToIdValuePair<T>(this NancyModule module) where T : struct
-        {
-            return ((T[]) Enum.GetValues(typeof (T)))
-                .Select((x, i) => new {id = i, value = x.ToString()});
-        }
-
         public static bool TryGetQueryParam<T>(this NancyModule module, string parameterName, out T value)
         {
             value = default(T);
