@@ -2,7 +2,6 @@
 using Crux.Domain.Persistence.NHibernate;
 using Crux.Domain.UoW;
 using Crux.NancyFx.Infrastructure.Exceptions;
-using Crux.NancyFx.Infrastructure.Extensions;
 using Nancy;
 using Nancy.Responses;
 using NHibernate.Context;
@@ -14,18 +13,18 @@ namespace Crux.NancyFx.Infrastructure.Pipelines
     {
         private const string REQUEST_TRANSACTIONAL_SCOPE_KEY = "transactional_scope";
 
-        public readonly static Func<NancyContext, Exception, Response> OnError = (ctx, ex) =>
+        public readonly static Func<NancyContext, Exception, Response> OnHttpBadRequest = (ctx, ex) =>
         {
             var badRequestException = ex as BadRequestException;
             if (badRequestException == null) return ctx.Response;
 
-            var validationResult = badRequestException.ModelModelValidationResult;
-            var flattenedErrors = new { errors = validationResult.GetFlattenedErrors() };
+            var jsonObject = new { errors = badRequestException.ValidationErrors };
 
-            return new JsonResponse(flattenedErrors, new DefaultJsonSerializer()) {
+            return new JsonResponse(jsonObject, new DefaultJsonSerializer()) {
                 StatusCode = HttpStatusCode.BadRequest
             };
         };
+
 
         public static Func<NancyContext, Response> BeforeEveryRequest(IContainer requestContainer)
         {

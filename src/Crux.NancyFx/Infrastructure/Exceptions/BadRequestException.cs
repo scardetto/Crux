@@ -1,15 +1,15 @@
 ﻿using System;
-using Nancy.Validation;
+using System.Collections.Generic;
 
 namespace Crux.NancyFx.Infrastructure.Exceptions
 {
     public class BadRequestException : ApplicationException
     {
-        public BadRequestException(ModelValidationResult modelValidationResult)
+        public BadRequestException(IDictionary<string, string[]> validationErrors)
         {
-            ModelModelValidationResult = modelValidationResult;
+            ValidationErrors = validationErrors;
         }
 
-        public ModelValidationResult ModelModelValidationResult { get; private set; }
+        public IDictionary<string, string[]> ValidationErrors { get; private set; }
     }
 }
