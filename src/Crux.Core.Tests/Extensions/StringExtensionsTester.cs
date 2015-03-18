@@ -184,7 +184,7 @@ namespace Crux.Core.Tests.Extensions
         [Test]
         public void toNullableDateTime_should_return_datetime_for_iso8601_input()
         {
-            "2014-11-06T00:00:00-05:00".ToNullableDateTime().Should().Be(new DateTime(2014, 11, 6));
+            "2014-11-06T00:00:00-05:00".ToNullableDateTime().Should().Be(new DateTimeOffset(new DateTime(2014, 11, 6), new TimeSpan(-5, 0, 0)).DateTime);
         }
     }
 }
