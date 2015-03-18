@@ -33,14 +33,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.5.5.0.0\lib\Net40\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\packages\Iesi.Collections.4.0.0.4000\lib\net40\Iesi.Collections.dll</HintPath>
+    </Reference>
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.23.1\lib\net40\Nancy.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.Owin">
       <HintPath>..\packages\Nancy.Owin.0.23.1\lib\net40\Nancy.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate, Version=4.0.0.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NHibernate.4.0.2.4000\lib\net40\NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.Net4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,12 +68,35 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bootstrapping\Bootstrapper.cs" />
+    <Compile Include="Infrastructure\Exceptions\BadRequestException.cs" />
+    <Compile Include="Infrastructure\Extensions\ModelValidationResultExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\NancyModuleExtensions.cs" />
+    <Compile Include="Modules\SecuredModule.cs" />
+    <Compile Include="Infrastructure\Pipelines\Pipelines.cs" />
+    <Compile Include="Infrastructure\Serialization\CustomJsonSerializer.cs" />
+    <Compile Include="Mappings\MapperConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Crux.Core\Crux.Core.csproj">
+      <Project>{138EB8D4-F89B-41AD-8B24-94FBF8A0CEAB}</Project>
+      <Name>Crux.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crux.Domain.Persistence\Crux.Domain.Persistence.csproj">
+      <Project>{37826a7f-805a-4e1a-96b3-160f6d26239b}</Project>
+      <Name>Crux.Domain.Persistence</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Crux.Domain\Crux.Domain.csproj">
+      <Project>{fec0709a-a9c6-4363-b2df-45da6f38f164}</Project>
+      <Name>Crux.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

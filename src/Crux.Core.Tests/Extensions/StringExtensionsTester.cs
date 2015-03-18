@@ -166,5 +166,25 @@ namespace Crux.Core.Tests.Extensions
             values.Join(",").Should().Be("a,sequence,of,strings");
             values.Join("|").Should().Be("a|sequence|of|strings");
         }
+
+        [Test]
+        public void toNullableDateTime_should_return_null_when_input_is_a_blank_string()
+        {
+            string.Empty.ToNullableDateTime("d").Should().Be(null);
+            "  ".ToNullableDateTime("d").Should().Be(null);
+            ((string)null).ToNullableDateTime("d").Should().Be(null);
+        }
+
+        [Test]
+        public void toNullableDateTime_should_return_datetime()
+        {
+            "09/25/2014".ToNullableDateTime("d").Should().Be(new DateTime(2014, 9, 25));
+        }
+
+        [Test]
+        public void toNullableDateTime_should_return_datetime_for_iso8601_input()
+        {
+            "2014-11-06T00:00:00-05:00".ToNullableDateTime().Should().Be(new DateTime(2014, 11, 6));
+        }
     }
 }
