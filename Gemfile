@@ -1,4 +1,4 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
-gem 'physique', '~> 0.2'
+gem 'physique', '~> 0.3'
