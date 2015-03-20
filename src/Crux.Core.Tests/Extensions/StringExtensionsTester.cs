@@ -185,8 +185,8 @@ namespace Crux.Core.Tests.Extensions
         [Test]
         public void toNullableDateTime_should_return_datetime_for_iso8601_input()
         {
-            var utcActual = "2014-11-06T00:00:00-05:00".ToNullableDateTime().Value.ToUniversalTime();
-            utcActual.Should().Be(new DateTimeOffset(new DateTime(2014, 11, 6), new TimeSpan(-5, 0, 0)).DateTime.ToUniversalTime());
+            var utcActual = "2014-11-06T00:00:00-03:00".ToNullableDateTime();
+            utcActual.Should().Be(new DateTimeOffset(new DateTime(2014, 11, 6), new TimeSpan(-3, 0, 0)));
         }
     }
 }
