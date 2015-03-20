@@ -29,5 +29,12 @@ namespace Crux.Core.Extensions
                 return false;
             }
         }
+
+        public static void AssertGuid(this string strGuid)
+        {
+            if (!strGuid.IsGuid()) {
+                throw new ArgumentException("Input is not a guid");
+            }
+        }
     }
 }
