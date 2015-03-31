@@ -5,21 +5,20 @@ namespace Crux.NServiceBus.Extensions
 {
     public static class ConfigExtensions
     {
-        public static Configure DefaultMessageNamingConventions(this Configure configure)
+        public static BusConfiguration DefaultMessageNamingConventions(this BusConfiguration config)
         {
-            configure
+            config.Conventions()
                 .DefiningCommandsAs(IsMessageTypeEndingWith("Command"))
                 .DefiningEventsAs(IsMessageTypeEndingWith("Event"))
-                .DefiningMessagesAs(IsMessageTypeEndingWith("Message"))
-                ;
+                .DefiningMessagesAs(IsMessageTypeEndingWith("Message"));
 
-            return configure;
+            return config;
         }
 
         private static Func<Type, bool> IsMessageTypeEndingWith(string name)
         {
             return t => t.Namespace != null
-                        && t.Namespace.Contains("Service.Messages.")
+                        && t.Namespace.Contains(".Messages.")
                         && t.Name.EndsWith(name);
         }
     }
