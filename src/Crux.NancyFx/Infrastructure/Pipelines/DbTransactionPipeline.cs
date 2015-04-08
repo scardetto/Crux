@@ -1,34 +1,23 @@
 ﻿using System;
 using Crux.Domain.Persistence.NHibernate;
 using Crux.Domain.UoW;
-using Crux.NancyFx.Infrastructure.Exceptions;
+using Crux.NancyFx.Infrastructure.Extensions;
 using Nancy;
-using Nancy.Responses;
 using NHibernate.Context;
 using StructureMap;
 
 namespace Crux.NancyFx.Infrastructure.Pipelines
 {
-    public static class Pipelines
+    public static class DbTransactionPipeline
     {
         private const string REQUEST_TRANSACTIONAL_SCOPE_KEY = "transactional_scope";
 
-        public readonly static Func<NancyContext, Exception, Response> OnHttpBadRequest = (ctx, ex) =>
-        {
-            var badRequestException = ex as BadRequestException;
-            if (badRequestException == null) return ctx.Response;
-
-            var jsonObject = new { errors = badRequestException.ValidationErrors };
-
-            return new JsonResponse(jsonObject, new DefaultJsonSerializer()) {
-                StatusCode = HttpStatusCode.BadRequest
-            };
-        };
-
-
         public static Func<NancyContext, Response> BeforeEveryRequest(IContainer requestContainer)
         {
-            return ctx => {
+            return ctx =>
+            {
+                if (ctx.IsHttpOptions()) return null;
+
                 var unitOfWork = requestContainer.GetInstance<INHibernateUnitOfWork>();
                 var scope = unitOfWork.CreateTransactionalScope(UnitOfWorkTransactionOptions.DirtyReads());
                 var session = unitOfWork.CurrentSession;
@@ -45,6 +34,8 @@ namespace Crux.NancyFx.Infrastructure.Pipelines
 
         public static Action<NancyContext> AfterEveryRequest = ctx =>
         {
+            if (ctx.IsHttpOptions()) return;
+
             if (ctx.Items.ContainsKey(REQUEST_TRANSACTIONAL_SCOPE_KEY)) {
                 var scope = (ITransactionalUnitOfWorkScope)ctx.Items[REQUEST_TRANSACTIONAL_SCOPE_KEY];
 
