@@ -73,9 +73,11 @@
   <ItemGroup>
     <Compile Include="Infrastructure\Exceptions\BadRequestException.cs" />
     <Compile Include="Infrastructure\Extensions\ModelValidationResultExtensions.cs" />
+    <Compile Include="Infrastructure\Extensions\NancyContextExtensions.cs" />
     <Compile Include="Infrastructure\Extensions\NancyModuleExtensions.cs" />
+    <Compile Include="Infrastructure\Pipelines\HttpBadRequestPipeline.cs" />
     <Compile Include="Modules\SecuredModule.cs" />
-    <Compile Include="Infrastructure\Pipelines\Pipelines.cs" />
+    <Compile Include="Infrastructure\Pipelines\DbTransactionPipeline.cs" />
     <Compile Include="Infrastructure\Serialization\CustomJsonSerializer.cs" />
     <Compile Include="Mappings\MapperConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
