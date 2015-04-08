@@ -23,11 +23,13 @@ namespace Crux.NancyFx.Infrastructure.Extensions
             return value != null && !value.Equals(default(T));
         }
 
-        public static T BindAndValidateModel<T>(this NancyModule module) where T : class
+        public static T BindAndValidateModel<T>(this NancyModule module, Action<T> hookToSetModel) where T : class
         {
             try {
                 var input = module.Bind<T>();
+                hookToSetModel(input);
                 module.ValidateModel(input);
+
                 return input;
             }
             catch (JsonReaderException ex) {
