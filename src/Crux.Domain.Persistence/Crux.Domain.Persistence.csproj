@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="NHibernate\Config\SqlExceptionConverter.cs" />
     <Compile Include="NHibernate\Config\TreatStringAsSqlAnsiString.cs" />
+    <Compile Include="NHibernate\IConnectionProvider.cs" />
     <Compile Include="NHibernate\NHibernateRepositoryOfId.cs" />
     <Compile Include="NHibernate\NHibernateUnitOfWork.cs" />
     <Compile Include="NHibernate\NHibernateUnitOfWorkTransaction.cs" />
