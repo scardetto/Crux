@@ -33,7 +33,9 @@ namespace Crux.Domain.Persistence
 
         public IDbConnection GetConnection()
         {
-            return new SqlConnection(_connectionString);
+            var connection = new SqlConnection(_connectionString);
+            connection.Open();
+            return connection;
         }
     }
 }
