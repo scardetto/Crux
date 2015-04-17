@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace Crux.Domain.Persistence.NHibernate
+namespace Crux.Domain.Persistence
 {
     public interface IDbConnectionProvider
     {
