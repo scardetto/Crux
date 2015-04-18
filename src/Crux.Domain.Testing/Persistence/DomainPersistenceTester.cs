@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Crux.Core.Extensions;
 using Crux.Domain.Entities;
+using Crux.Domain.Persistence;
 using Crux.Domain.Persistence.NHibernate;
 using NHibernate;
 using NUnit.Framework;
@@ -17,6 +18,7 @@ namespace Crux.Domain.Testing.Persistence
         private IList<DomainEntityOfId<TId>> _insertedEntities;
 
         public abstract ISessionFactory SessionFactory { get; }
+        public abstract IDbConnectionProvider ConnectionProvider { get; }
 
         protected INHibernateUnitOfWork UnitOfWork { get; private set; }
         protected IRepositoryOfId<TId> Repository { get; private set; }
@@ -25,7 +27,7 @@ namespace Crux.Domain.Testing.Persistence
         [SetUp]
         public void SetUp()
         {
-            UnitOfWork = new NHibernateUnitOfWork(SessionFactory);
+            UnitOfWork = new NHibernateUnitOfWork(SessionFactory, ConnectionProvider);
             _insertedEntities = new List<DomainEntityOfId<TId>>();
             Repository = new NHibernateRepositoryOfId<TId>(UnitOfWork);
             ReverseTearDown = true;
@@ -85,7 +87,7 @@ namespace Crux.Domain.Testing.Persistence
 
         protected void RunInUnitOfWork(Action<IRepositoryOfId<TId>> action)
         {
-            var unitOfWork = new NHibernateUnitOfWork(SessionFactory);
+            var unitOfWork = new NHibernateUnitOfWork(SessionFactory, ConnectionProvider);
             var repository = new NHibernateRepositoryOfId<TId>(unitOfWork);
 
             using (var scope = unitOfWork.CreateScope())

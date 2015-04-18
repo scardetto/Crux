@@ -1,48 +1,37 @@
 ﻿using System;
-using System.Data.SqlClient;
-using NHibernate;
 using NHibernate.Exceptions;
 
 namespace Crux.Domain.Persistence.NHibernate.Config
 {
+    /// <summary>
+    /// Delegates calls from the NHibernate exception pipeline to a SqlExceptionMapper.
+    /// </summary>
     public class SqlExceptionConverter : ISQLExceptionConverter
     {
+        private readonly SqlExceptionMapper _mapper;
+
+        /// <summary>
+        /// Creates a new SqlExceptionConverter with default mapping rules.
+        /// </summary>
+        public SqlExceptionConverter() : this(SqlExceptionMapper.Default()) { }
+
+        /// <summary>
+        /// Creates a new SqlExceptionConverter with the provided mapping rules.
+        /// </summary>
+        public SqlExceptionConverter(SqlExceptionMapper mapping)
+        {
+            _mapper = mapping;
+        }
+
+        /// <summary>
+        /// Called by NHibernate when an exception occurs. Uses the 
+        /// SqlExceptionMapper to determine if and how the exception is 
+        /// converted.
+        /// </summary>
+        /// <param name="exceptionContext">Available info about the exception being thrown.</param>
         public Exception Convert(AdoExceptionContextInfo exceptionContext)
         {
-            var sqlException = ADOExceptionHelper.ExtractDbException(exceptionContext.SqlException) as SqlException;
-
-            if (sqlException != null) {
-                switch (sqlException.Number) {
-                    case 2627:
-                    case 2601:
-                    case 547:
-                        return new ConstraintViolationException(
-                            exceptionContext.SqlException.Message,
-                            sqlException.InnerException,
-                            exceptionContext.Sql,
-                            null
-                        );
-
-                    case 208:
-                        return new SQLGrammarException(
-                            exceptionContext.SqlException.Message,
-                            sqlException.InnerException,
-                            exceptionContext.Sql
-                        );
-
-                    case 3960:
-                        return new StaleObjectStateException(
-                            exceptionContext.EntityName,
-                            exceptionContext.EntityId
-                        );
-                }
-            }
-
-            return SQLStateConverter.HandledNonSpecificException(
-                exceptionContext.SqlException,
-                exceptionContext.Message,
-                exceptionContext.Sql
-            );
+            return _mapper.Convert(exceptionContext);
         }
     }
 }
