@@ -38,20 +38,27 @@ namespace Crux.Domain.Testing.Persistence
         [TearDown]
         public void TearDown()
         {
-            var entities = ReverseTearDown
-                    ? _insertedEntities.Reverse()
-                    : _insertedEntities;
-
-            entities.Each(e =>
+            if (UnitOfWork != null)
             {
-                // ReSharper disable AccessToDisposedClosure
-                Repository.Delete(e);
-                UnitOfWork.Flush();
-                UnitOfWork.Clear();
-                // ReSharper restore AccessToDisposedClosure
-            });
 
-            UnitOfWork.Dispose();
+                if (_insertedEntities != null)
+                {
+                    var entities = ReverseTearDown
+                        ? _insertedEntities.Reverse()
+                        : _insertedEntities;
+
+                    entities.Each(e =>
+                    {
+                        // ReSharper disable AccessToDisposedClosure
+                        Repository.Delete(e);
+                        UnitOfWork.Flush();
+                        UnitOfWork.Clear();
+                        // ReSharper restore AccessToDisposedClosure
+                    });
+                }
+
+                UnitOfWork.Dispose();
+            }
         }
 
         protected void SaveSupportingEntity<T>(T entity) where T : DomainEntityOfId<TId>
