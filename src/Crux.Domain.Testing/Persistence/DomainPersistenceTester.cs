@@ -15,7 +15,7 @@ namespace Crux.Domain.Testing.Persistence
     [Category("PersistenceTest")]
     public abstract class DomainPersistenceTester<TId>
     {
-        private IList<DomainEntityOfId<TId>> _insertedEntities;
+        private IList<object> _insertedEntities;
 
         public abstract ISessionFactory SessionFactory { get; }
         public abstract IDbConnectionProvider ConnectionProvider { get; }
@@ -28,7 +28,7 @@ namespace Crux.Domain.Testing.Persistence
         public void SetUp()
         {
             UnitOfWork = new NHibernateUnitOfWork(SessionFactory, ConnectionProvider);
-            _insertedEntities = new List<DomainEntityOfId<TId>>();
+            _insertedEntities = new List<object>();
             Repository = new NHibernateRepositoryOfId<TId>(UnitOfWork);
             ReverseTearDown = true;
 
@@ -38,32 +38,34 @@ namespace Crux.Domain.Testing.Persistence
         [TearDown]
         public void TearDown()
         {
-            if (UnitOfWork != null)
-            {
+            if (UnitOfWork == null || _insertedEntities == null) return;
 
-                if (_insertedEntities != null)
-                {
-                    var entities = ReverseTearDown
-                        ? _insertedEntities.Reverse()
-                        : _insertedEntities;
+            var entities = ReverseTearDown
+                ? _insertedEntities.Reverse()
+                : _insertedEntities;
 
-                    entities.Each(e =>
-                    {
-                        // ReSharper disable AccessToDisposedClosure
-                        Repository.Delete(e);
-                        UnitOfWork.Flush();
-                        UnitOfWork.Clear();
-                        // ReSharper restore AccessToDisposedClosure
-                    });
-                }
+            entities.Each(e => {
+                // ReSharper disable AccessToDisposedClosure
+                UnitOfWork.CurrentSession.Delete(e);
+                UnitOfWork.Flush();
+                UnitOfWork.Clear();
+                // ReSharper restore AccessToDisposedClosure
+            });
 
-                UnitOfWork.Dispose();
-            }
+            UnitOfWork.Dispose();
         }
 
         protected void SaveSupportingEntity<T>(T entity) where T : DomainEntityOfId<TId>
         {
             Repository.Save(entity);
+            UnitOfWork.Flush();
+
+            _insertedEntities.Add(entity);
+        }
+
+        protected internal void SaveSupportingEntityOfDifferentIdType(object entity)
+        {
+            UnitOfWork.CurrentSession.Save(entity);
             UnitOfWork.Flush();
 
             _insertedEntities.Add(entity);
@@ -89,7 +91,9 @@ namespace Crux.Domain.Testing.Persistence
         protected void SetDeleteOrder(IList<DomainEntityOfId<TId>> entites)
         {
             ReverseTearDown = false;
-            _insertedEntities = entites;
+            _insertedEntities = entites
+                .Cast<object>()
+                .ToList();
         }
 
         protected void RunInUnitOfWork(Action<IRepositoryOfId<TId>> action)
@@ -97,8 +101,7 @@ namespace Crux.Domain.Testing.Persistence
             var unitOfWork = new NHibernateUnitOfWork(SessionFactory, ConnectionProvider);
             var repository = new NHibernateRepositoryOfId<TId>(unitOfWork);
 
-            using (var scope = unitOfWork.CreateScope())
-            {
+            using (var scope = unitOfWork.CreateScope()) {
                 action.Invoke(repository);
                 scope.Complete();
             }
