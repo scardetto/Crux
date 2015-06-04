@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
-using Rhino.Mocks;
 
 namespace Crux.Caching.Tests
 {
@@ -14,12 +13,10 @@ namespace Crux.Caching.Tests
     {
         private const int INDEX = -1;
         private RuntimeCache _cache;
-        private ICacheFilePathBuilder _cachePathBuilder;
 
         [SetUp]
         public void SetUp()
         {
-            _cachePathBuilder = MockRepository.GenerateMock<ICacheFilePathBuilder>();
             _cache = new RuntimeCache();
         }
 
@@ -130,12 +127,12 @@ namespace Crux.Caching.Tests
 
         private CacheVariableBuilder<CachedObjectForTest> GetBuilder()
         {
-            return new CacheVariableBuilder<CachedObjectForTest>(_cache, _cachePathBuilder);
+            return new CacheVariableBuilder<CachedObjectForTest>(_cache);
         }
 
         private CacheVariableBuilder<long> GetBuilderOfLong()
         {
-            return new CacheVariableBuilder<long>(_cache, _cachePathBuilder);
+            return new CacheVariableBuilder<long>(_cache);
         }
 
         private CacheVariableBuilder<CachedObjectForTest> GetValidBuilder()
