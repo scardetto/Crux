@@ -4,32 +4,9 @@ using System.Threading;
 
 namespace Crux.Caching
 {
-    public interface ICacheVariableFactory
-    {
-        CacheVariableBuilder<T> Build<T>();
-    }
-
-    public class CacheVariableFactory : ICacheVariableFactory
-    {
-        private readonly ICache _cache;
-        private readonly ICacheFilePathBuilder _pathBuilder;
-
-        public CacheVariableFactory(ICache cache, ICacheFilePathBuilder pathBuilder)
-        {
-            _cache = cache;
-            _pathBuilder = pathBuilder;
-        }
-
-        public CacheVariableBuilder<T> Build<T>()
-        {
-            return new CacheVariableBuilder<T>(_cache, _pathBuilder);
-        }
-    }
-
     public class CacheVariableBuilder<T>
     {
         private readonly ICache _cache;
-        private readonly ICacheFilePathBuilder _pathBuilder;
 
         private string _key;
         private Func<T> _initializer;
@@ -38,10 +15,9 @@ namespace Crux.Caching
         private bool _lazyLoad;
         private readonly IList<CacheExpirationInfo> _expirationConfigs;
 
-        public CacheVariableBuilder(ICache cache, ICacheFilePathBuilder pathBuilder)
+        public CacheVariableBuilder(ICache cache)
         {
             _cache = cache;
-            _pathBuilder = pathBuilder;
             _expirationConfigs = new List<CacheExpirationInfo>();
             _initializationTimeout = Timeout.Infinite;
             _lazyLoad = true;
@@ -77,9 +53,9 @@ namespace Crux.Caching
             return this;
         }
 
-        public CacheVariableBuilder<T> SaveBackupToFile()
+        public CacheVariableBuilder<T> SaveBackupToFile(ICacheFilePathBuilder pathBuilder)
         {
-            return WrapInitializationWith(new BackupFileInterceptor(_pathBuilder));
+            return WrapInitializationWith(new BackupFileInterceptor(pathBuilder));
         } 
 
         public CacheVariableBuilder<T> WrapInitializationWith(ICacheInterceptor interceptor)
