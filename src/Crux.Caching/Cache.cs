@@ -15,6 +15,14 @@ namespace Crux.Caching
         void Remove(string key);
     }
 
+    public static class CacheExtensions
+    {
+        public static CacheVariableBuilder<T> BuildVariable<T>(this ICache cache)
+        {
+            return new CacheVariableBuilder<T>(cache);
+        }
+    }
+
     public class RuntimeCache : ICache
     {
         private readonly MemoryCache _cache;

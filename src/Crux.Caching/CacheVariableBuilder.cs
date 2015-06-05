@@ -4,26 +4,6 @@ using System.Threading;
 
 namespace Crux.Caching
 {
-    public interface ICacheVariableFactory
-    {
-        CacheVariableBuilder<T> Build<T>();
-    }
-
-    public class CacheVariableFactory : ICacheVariableFactory
-    {
-        private readonly ICache _cache;
-
-        public CacheVariableFactory(ICache cache)
-        {
-            _cache = cache;
-        }
-
-        public CacheVariableBuilder<T> Build<T>()
-        {
-            return new CacheVariableBuilder<T>(_cache);
-        }
-    }
-
     public class CacheVariableBuilder<T>
     {
         private readonly ICache _cache;

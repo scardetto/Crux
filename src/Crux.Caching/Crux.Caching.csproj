@@ -51,7 +51,7 @@
     <Compile Include="CacheFilePathBuilder.cs" />
     <Compile Include="CacheInitializer.cs" />
     <Compile Include="CacheVariable.cs" />
-    <Compile Include="CacheVariableFactory.cs" />
+    <Compile Include="CacheVariableBuilder.cs" />
     <Compile Include="CachingException.cs" />
     <Compile Include="DefaultCacheInterceptor.cs" />
     <Compile Include="ICacheInterceptor.cs" />
