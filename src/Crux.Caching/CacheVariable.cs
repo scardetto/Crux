@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using Crux.Logging;
+using Crux.Caching.Logging;
 
 namespace Crux.Caching
 {
@@ -19,7 +18,7 @@ namespace Crux.Caching
         public CacheVariable(ICache cache, string key, CacheInitializer<T> initializer, IEnumerable<CacheExpirationInfo> expirationConfigs, int timeout, bool lazyLoad)
         {
             _cache = cache;
-            _log = LogManager.GetLogger(GetType());
+            _log = LogProvider.GetCurrentClassLogger();
 
             Key = key;
             Initializer = initializer;
@@ -60,7 +59,7 @@ namespace Crux.Caching
                 AddValueToCache(value);
                 return value;
             } catch (Exception e) {
-                _log.Warn("Error loading cache variable", e);
+                _log.WarnException("Error loading cache variable", e);
                 _cache.Remove(Key);
                 throw;
             } finally {
