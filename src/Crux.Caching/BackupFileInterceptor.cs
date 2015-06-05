@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Crux.Logging;
+using Crux.Caching.Logging;
 
 namespace Crux.Caching
 {
@@ -14,7 +13,7 @@ namespace Crux.Caching
         public BackupFileInterceptor(ICacheFilePathBuilder pathBuilder)
         {
             _pathBuilder = pathBuilder;
-            _log = LogManager.GetLogger(GetType());
+            _log = LogProvider.GetCurrentClassLogger();
         }
 
         public void OnSuccess(string key, object value)
@@ -28,7 +27,7 @@ namespace Crux.Caching
             } catch (Exception e) {
                 // Since the backup is not required for normal operation, we do 
                 // not throw exceptions, just log warnings.
-                _log.Warn(e);
+                _log.WarnException("Error backing up caches value", e);
             }
         }
 
@@ -62,12 +61,10 @@ namespace Crux.Caching
         private void EnsurePathExists(FileInfo backupFile)
         {
             var directory = backupFile.Directory;
-            Debug.Assert(directory != null, "directory != null");
+            if (directory == null || directory.Exists) return;
 
             try {
-                if (!directory.Exists) {
-                    directory.Create();
-                }
+                directory.Create();
             } catch (Exception e) {
                 throw new CachingException(String.Format("Error creating backup directory {0}", directory.FullName), e);
             }
@@ -77,12 +74,7 @@ namespace Crux.Caching
         {
             var backupFile = GetBackupFile(key);
 
-            if (!backupFile.Exists) {
-                return null;
-            }
-
-            return DeserializeBackup(backupFile);
-
+            return !backupFile.Exists ? null : DeserializeBackup(backupFile);
         }
 
         private object DeserializeBackup(FileInfo backupFile)

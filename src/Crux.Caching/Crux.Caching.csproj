@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Packages\LibLog.4.2\LibLog.cs" />
     <Compile Include="BackupFileInterceptor.cs" />
     <Compile Include="Cache.cs" />
     <Compile Include="CacheExpirationInfo.cs" />
@@ -62,12 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Crux.Logging\Crux.Logging.csproj">
-      <Project>{b1e9f3f9-d7bb-4738-af44-f81fbe0e3d07}</Project>
-      <Name>Crux.Logging</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
