@@ -68,6 +68,8 @@ namespace Crux.Domain.Persistence.NHibernate
                 return;
             }
 
+            //must close connection manually since it was manually opened and given to NH
+            CurrentSession.Connection.Close(); 
             CurrentSession.Dispose();
             CurrentSession = null;
         }
