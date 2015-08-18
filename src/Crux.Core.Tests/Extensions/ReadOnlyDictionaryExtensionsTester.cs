@@ -20,7 +20,7 @@ namespace Crux.Core.Tests.Extensions
         [Test]
         public void should_get_the_default_for_type_when_no_key_is_found()
         {
-            _dictionary.GetValue("key").Should().BeNull();
+            _dictionary.GetValue("missing").Should().BeNull();
         }
     }
 }
