@@ -9,8 +9,8 @@ namespace Crux.Core.Types
     {
         private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public string AlphaNumber { get; }
-        public int DecimalNumber { get; }
+        public string AlphaNumber { get; private set; }
+        public int DecimalNumber { get; private set; }
 
         public Base26(int decimalNumber)
         {
