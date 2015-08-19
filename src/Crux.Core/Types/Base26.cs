@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Crux.Core.Types
 {
-    //Hexavigesimal number system A = 1 ... Z = 26, AA = 27 ...
+    //Hexavigesimal number system A = 1 ... Z = 26, AA = 27 ... 
     public class Base26
     {
         private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
