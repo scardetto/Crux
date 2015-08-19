@@ -58,10 +58,12 @@
     <Compile Include="Extensions\EnumExtentionsTester.cs" />
     <Compile Include="Extensions\GuidExtensionsTester.cs" />
     <Compile Include="Extensions\QueryStringExtensionsTester.cs" />
+    <Compile Include="Extensions\ReadOnlyDictionaryExtensionsTester.cs" />
     <Compile Include="Extensions\StringExtensionsTester.cs" />
     <Compile Include="Extensions\TelcoExtensionsTester.cs" />
     <Compile Include="MoneyDistributorTester.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\Base26Tester.cs" />
     <Compile Include="Utils\EnumUtilsTests.cs" />
   </ItemGroup>
   <ItemGroup>
