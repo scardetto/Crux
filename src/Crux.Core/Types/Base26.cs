@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Crux.Core.Types
 {
@@ -9,37 +10,60 @@ namespace Crux.Core.Types
     {
         private const string Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public string AlphaNumber { get; private set; }
-        public int DecimalNumber { get; private set; }
+        public string AlphaNumber { get; }
+        public int DecimalNumber { get; }
 
         public Base26(int decimalNumber)
         {
+            if (decimalNumber <= 0) throw new ArgumentException("decimalNumber cannot be 0 or negative");
+
+            AlphaNumber = ToAlphaNumber(decimalNumber);
             DecimalNumber = decimalNumber;
-            AlphaNumber = ToAlphaNumber();
         }
 
         public Base26(string alphaNumber)
         {
-            AlphaNumber = alphaNumber.ToUpper();
-            DecimalNumber = ToDecimal();
+            alphaNumber = alphaNumber.ToUpper();
+
+            Validate(alphaNumber);
+
+            DecimalNumber = ToDecimal(alphaNumber);
+            AlphaNumber = alphaNumber;
         }
 
-        private int ToDecimal()
+        private static void Validate(string alphaNumber)
         {
-            return AlphaNumber
-                .Reverse()
-                .Select((c, i) => (int)(ToDecimal(c) * Math.Pow(26, i)))
-                .Sum();
+            var conditions = new Func<string, bool>[] {
+                string.IsNullOrWhiteSpace,
+                s => !Regex.IsMatch(s, "^[a-zA-Z]+$")
+            };
+
+            if (conditions.Any(c => c(alphaNumber))) {
+                throw new ArgumentException($"{alphaNumber} is not a valid alphaNumber");
+            }
         }
 
-        private string ToAlphaNumber()
+        private static int ToDecimal(string alphaNumber)
+        {
+            try {
+                return alphaNumber
+                    .Reverse()
+                    .Select((c, i) => (int)(ToDecimal(c) * Math.Pow(26, i)))
+                    .Sum();
+            }
+            catch (OverflowException) {
+                throw new ArgumentException("alphaNumber given is outside of the range of the integer type");
+            }
+        }
+
+        private static string ToAlphaNumber(int decimalNumber)
         {
             var remainders = new List<int>();
             var remainder = 0;
 
-            for (var counter = 1; remainder != DecimalNumber; counter++)
+            for (var counter = 1; remainder != decimalNumber; counter++)
             {
-                remainder = DecimalNumber % (int)(Math.Pow(26, counter));
+                remainder = decimalNumber % (int)(Math.Pow(26, counter));
                 remainders.Add(remainder);
             }
 
